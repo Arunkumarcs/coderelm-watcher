@@ -44,7 +44,7 @@ Watcher watches the change in attached objects and reports back the linked chang
 #### `createProxy(element, name)`
 Creates proxy object that will be tracked by watcher.
 
-`element` : The object to be watched.
+`element` : The object to be watched.<br>
 `name` : The identifier for the proxy object.
 
 
@@ -52,7 +52,7 @@ Creates proxy object that will be tracked by watcher.
 The method get triggered on every chnages in the attached proxy object.
 
 `name`: Proxy object identifier.<br>
-`obj`: Proxy object itself.
-`pro`: Property in proxy object.
-`oldVal`: Old value in the proxy object property.
+`obj`: Proxy object itself.<br>
+`pro`: Property in proxy object.<br>
+`oldVal`: Old value in the proxy object property.<br>
 `newVal`: New updated value in the proxy object property.
