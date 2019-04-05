@@ -24,11 +24,17 @@ Watcher watches the change in attached objects and reports back the linked chang
 
     // Your Tracker function
     watchObj.tracker = function(name, obj, pro, oldVal, newVal) {
-        console.log(name)
-        console.log(pro)
-        console.log(oldVal)
-        console.log(newVal)
-        console.log(this)
+        switch (name) {
+            case "p1":
+                console.log(`the property "${pro}" in p1 has been changed to new value "${newVal}"`)
+                break;
+            case "p2":
+                console.log(`the property "${pro}" in p2 has been changed to new value "${newVal}"`)
+                break;
+            default:
+                console.log(this)
+                break;
+        }
     }
 
     // Creating Proxy for Objects
