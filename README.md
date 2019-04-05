@@ -51,7 +51,7 @@ Creates proxy object that will be tracked by watcher.
 #### `tracker(name, obj, pro, oldVal, newVal)`
 The method get triggered on every chnages in the attached proxy object.
 
-`name`: Proxy object identifier.
+`name`: Proxy object identifier.<br>
 `obj`: Proxy object itself.
 `pro`: Property in proxy object.
 `oldVal`: Old value in the proxy object property.
