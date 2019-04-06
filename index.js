@@ -1,6 +1,8 @@
+/**
+ * Watcher Class
+ */
 class Watcher {
     constructor() {
-        let self = this
         this._obj = {}
     }
 
@@ -12,7 +14,7 @@ class Watcher {
      * @param {*} oldVal 
      * @param {*} newVal 
      */
-    _tracker(name, obj, pro, oldVal, newVal) {
+    async _tracker(name, obj, pro, oldVal, newVal) {
         console.log(`the property "${pro}" in  ${name}" is being changed to new value.`)
     }
 
@@ -24,8 +26,8 @@ class Watcher {
         let self = this
         return {
             // Setter
-            set(obj, prop, value) {
-                self._tracker(
+            async set(obj, prop, value) {
+                await self._tracker(
                     name,
                     obj,
                     prop,
@@ -36,7 +38,7 @@ class Watcher {
                 return true
             },
             // Getter
-            get(obj, prop) {
+            async get(obj, prop) {
                 return obj[prop]
             }
         }
@@ -47,7 +49,7 @@ class Watcher {
      * @param {*} element 
      * @param {*} name 
      */
-    createProxy(element, name) {
+    register(element, name) {
         let self = this
         self[name] = element
 
@@ -56,6 +58,10 @@ class Watcher {
         }
 
         return new Proxy(element, self._proxy(name))
+    }
+
+    createProxy(element, name) {
+        return this.register(element, name)
     }
 
     // setters

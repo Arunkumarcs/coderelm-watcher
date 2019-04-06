@@ -4,8 +4,8 @@ let watchObj = new watcher()
 let p1 = { a: "sdfsef" }
 let p2 = { d3: "23qw3"}
 
-// Your Tracker function
-watchObj.tracker = function(name, obj, pro, oldVal, newVal) {
+// Your Tracker function this can also be a ordinary function
+watchObj.tracker = async function(name, obj, pro, oldVal, newVal) {
     switch (name) {
         case "p1":
             console.log(`the property "${pro}" in p1 has been changed to new value "${newVal}"`)
@@ -19,10 +19,13 @@ watchObj.tracker = function(name, obj, pro, oldVal, newVal) {
     }
 }
 
-// Creating Proxy for Objects
-p1 = watchObj.createProxy(p1, "p1")
-p2 = watchObj.createProxy(p2, "p2")
+// Creating Proxy for Objects 
+p1 = watchObj.register(p1, "p1")
+p2 = watchObj.register(p2, "p2")
 
 // watchObj.tracker will emit on each update
 p1.d3 = "sadfsdf"  
 p2.d1 = "sadfsdf" 
+
+// This will provides all the registered object into watcher.
+console.log(watchObj._obj)
