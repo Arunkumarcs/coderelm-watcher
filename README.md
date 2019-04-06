@@ -37,7 +37,7 @@ Watcher watches the change in attached objects and reports back the linked chang
         }
     }
 
-    // Creating Proxy abd register object in watcher instance.
+    // Creating Proxy and register object in watcher instance.
     p1 = watchObj.register(p1, "p1")
     p2 = watchObj.register(p2, "p2")
 

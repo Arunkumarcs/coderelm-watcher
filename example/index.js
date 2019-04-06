@@ -19,7 +19,7 @@ watchObj.tracker = async function(name, obj, pro, oldVal, newVal) {
     }
 }
 
-// Creating Proxy for Objects 
+// Creating Proxy and register object in watcher instance.
 p1 = watchObj.register(p1, "p1")
 p2 = watchObj.register(p2, "p2")
 

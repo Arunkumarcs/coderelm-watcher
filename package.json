@@ -1,6 +1,6 @@
 {
   "name": "@arunkumarcoderelm/watcher",
-  "version": "1.2.0",
+  "version": "1.2.2",
   "description": "Watcher watches the change in attached objects and reports back the linked changes.",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,9 @@
     "url": "git+https://github.com/Arunkumarcs/coderelm-watcher.git"
   },
   "keywords": [
-    "watcher"
+    "watcher",
+    "watch",
+    "monitor"
   ],
   "author": "Arunkumar",
   "license": "ISC",
