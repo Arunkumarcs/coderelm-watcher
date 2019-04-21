@@ -1,8 +1,6 @@
 let wObj  = require('../index')
 wObj = new wObj()
 
-// Your Tracker function this can also be a ordinary function
-watchObj.tracker = async function(name, obj, pro, oldVal, newVal) {
 wObj.register(
     'o1', 
     { asd: 4543}, 
