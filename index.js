@@ -1,76 +1,120 @@
 /**
- * Watcher Class
+ * 
+ * @param {*} name 
+ * @param {*} state 
+ * @param {*} data 
+ * @param {*} action 
  */
-class Watcher {
-    constructor() {
-        this._obj = {}
-    }
-
-    /**
-     * Default Tracker
-     * @param {*} name 
-     * @param {*} obj 
-     * @param {*} pro 
-     * @param {*} oldVal 
-     * @param {*} newVal 
-     */
-    async _tracker(name, obj, pro, oldVal, newVal) {
-        console.log(`the property "${pro}" in  ${name}" is being changed to new value.`)
-    }
-
-    /**
-     * Proxy Object
-     * @param {*} name 
-     */
-    _proxy(name) {
-        let self = this
-        return {
-            // Setter
-            async set(obj, prop, value) {
-                await self._tracker(
-                    name,
-                    obj,
-                    prop,
-                    obj[prop],
-                    value
-                )
-                obj[prop] = value
-                return true
-            },
-            // Getter
-            async get(obj, prop) {
-                return obj[prop]
+let defaultTracker = function(name, state, data, action) {
+    switch (action) {
+        default:
+            console.log(`${name}" is being changed to new value.`)
+            if(typeof data === Object) {
+                return {
+                    ...state,
+                    ...data
+                }
+            } else {
+                return data
             }
-        }
-    }
-
-    /**
-     * create proxy for objects
-     * @param {*} element 
-     * @param {*} name 
-     */
-    register(element, name) {
-        let self = this
-        self[name] = element
-
-        element.getObjectName = function () {
-            return name
-        }
-
-        return new Proxy(element, self._proxy(name))
-    }
-
-    createProxy(element, name) {
-        return this.register(element, name)
-    }
-
-    // setters
-    set tracker(val) {
-        this._tracker = val
-    }
-    set proxy(val) {
-        this._proxy = val
+            break;
     }
 }
 
+/**
+ * 
+ */
+class Watcher {
+    constructor() {
+        this.getAll = this._getAll 
+        this.update = this._update
+        this.getState = this._getState
+        this.register = this._register
+        this.deRegister = this._deRegister
+        this.updateTracker = this._updateTracker
+    }
+
+    /**
+     * 
+     */
+    _getAll() {
+        return this.instances
+    }
+
+    /**
+     * 
+     * @param {*} identifier 
+     * @param {*} data 
+     * @param {*} action 
+     */
+    _update(
+        identifier,
+        data,
+        action = ""
+    ) {
+        let self = this
+        let oldState = this.instances[identifier]
+        
+        this.instances[identifier] = self.tracker[identifier](
+            identifier,
+            oldState,
+            data,
+            action
+        )
+    }
+
+    /**
+     * 
+     * @param {*} identifier 
+     */
+    _getState(identifier) {
+        return this.instances[identifier]
+    }
+
+    /**
+     * 
+     * @param {*} obj 
+     * @param {*} identifier 
+     * @param {*} tracker 
+     */
+    _register(
+        identifier,
+        obj = {},
+        tracker = defaultTracker
+    ) {
+        this.tracker[identifier] = tracker 
+        this.instances[identifier] = obj
+    }
+
+    /**
+     * 
+     * @param {*} identifier 
+     */
+    _deRegister(identifier) {
+        if(this.instances[identifier] !== undefined) {
+            delete this.instances[identifier]
+            delete this.tracker[identifier]
+        }        
+    }
+
+    /**
+     * 
+     * @param {*} identifier 
+     * @param {*} tracker 
+     */
+    _updateTracker(
+        identifier,
+        tracker = defaultTracker
+    ) {
+        this.tracker[identifier] = tracker
+    }
+}
+
+/**
+ * Protected Properties
+ */
+Watcher.prototype.instances = {}
+Watcher.prototype.tracker = {}
+
+// let wObj = new Watcher()
 module.exports = Watcher

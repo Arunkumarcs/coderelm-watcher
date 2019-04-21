@@ -1,31 +1,27 @@
-let watcher = require('@arunkumarcoderelm/watcher') 
-let watchObj = new watcher()
-
-let p1 = { a: "sdfsef" }
-let p2 = { d3: "23qw3"}
+let wObj  = require('../index')
+wObj = new wObj()
 
 // Your Tracker function this can also be a ordinary function
 watchObj.tracker = async function(name, obj, pro, oldVal, newVal) {
-    switch (name) {
-        case "p1":
-            console.log(`the property "${pro}" in p1 has been changed to new value "${newVal}"`)
-            break;
-        case "p2":
-            console.log(`the property "${pro}" in p2 has been changed to new value "${newVal}"`)
-            break;
-        default:
-            console.log(this)
-            break;
+wObj.register(
+    'o1', 
+    { asd: 4543}, 
+    function(name, state, data, action) {
+        switch (action) {
+            default:
+                return {
+                    ...state,
+                    ...data
+                }
+                break;
+        }
     }
-}
+)
 
-// Creating Proxy and register object in watcher instance.
-p1 = watchObj.register(p1, "p1")
-p2 = watchObj.register(p2, "p2")
-
-// watchObj.tracker will emit on each update
-p1.d3 = "sadfsdf"  
-p2.d1 = "sadfsdf" 
-
-// This will provides all the registered object into watcher.
-console.log(watchObj._obj)
+wObj.update('o1', {
+    sda: {
+        asd: 453245
+    }
+}, 'UPDATE')
+console.log(wObj.getState('o1'))
+console.log(wObj)
